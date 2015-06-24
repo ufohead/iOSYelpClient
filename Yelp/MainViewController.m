@@ -58,7 +58,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
     
-    self.tableView.rowHeight = UITableViewAutomaticDimension+90; //no needed in iOS 8
+    self.tableView.estimatedRowHeight = 68.0; // Needed!!!
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.title = @"Yelp";
 }

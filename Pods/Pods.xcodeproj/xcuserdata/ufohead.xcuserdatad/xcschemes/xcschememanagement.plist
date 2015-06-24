@@ -8,37 +8,31 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>Pods-BDBOAuth1Manager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>17F191D873D36DE8C0F4D7F3</key>
+		<key>11DEDEFC836B98D7797390E3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>46941D9ADFA6EFC1505C9778</key>
+		<key>D2B54BE14A07F552C928B68E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>47087382FBB9D8493DDBF300</key>
+		<key>E24002B24FA0E3F68E3F692F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
