@@ -26,6 +26,7 @@
 		8F4355021B3AD77400F7DD00 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F4355011B3AD77400F7DD00 /* Business.m */; };
 		8F4355071B3AE09E00F7DD00 /* BusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F4355051B3AE09E00F7DD00 /* BusinessCell.m */; };
 		8F4355081B3AE09E00F7DD00 /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F4355061B3AE09E00F7DD00 /* BusinessCell.xib */; };
+		8FB09D071B3B0ACF0086528D /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FB09D061B3B0ACF0086528D /* FilterViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		8F4355041B3AE09E00F7DD00 /* BusinessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCell.h; sourceTree = "<group>"; };
 		8F4355051B3AE09E00F7DD00 /* BusinessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCell.m; sourceTree = "<group>"; };
 		8F4355061B3AE09E00F7DD00 /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessCell.xib; sourceTree = "<group>"; };
+		8FB09D051B3B0ACF0086528D /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		8FB09D061B3B0ACF0086528D /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		9DEC6D18C14F46F8AF2EA320 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C185DB7BE0344F0E4AF08516 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +113,8 @@
 				420474F818DC2B2100E88E07 /* MainViewController.h */,
 				420474F918DC2B2100E88E07 /* MainViewController.m */,
 				420474FA18DC2B2100E88E07 /* MainViewController.xib */,
+				8FB09D051B3B0ACF0086528D /* FilterViewController.h */,
+				8FB09D061B3B0ACF0086528D /* FilterViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
+				8FB09D071B3B0ACF0086528D /* FilterViewController.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				8F4355071B3AE09E00F7DD00 /* BusinessCell.m in Sources */,
 			);
