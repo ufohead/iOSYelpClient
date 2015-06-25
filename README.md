@@ -33,4 +33,4 @@ Time spent: 20
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Video Walkthrough](Yelp.gif)
