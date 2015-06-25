@@ -39,6 +39,7 @@
 + (NSArray *) businessesWithDictionaries:(NSArray *)dictionaries {
     NSMutableArray *businesses = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
+        //NSLog(@"%@",dictionary);
         Business *business = [[Business alloc]initWithDictionary:dictionary];
         [businesses addObject:business];
     }
