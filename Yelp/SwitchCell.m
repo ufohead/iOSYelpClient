@@ -25,7 +25,7 @@
 - (void)awakeFromNib {
     // Initialization code
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-
+    //[self setOn:NO];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

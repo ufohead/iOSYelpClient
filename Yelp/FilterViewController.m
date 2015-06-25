@@ -13,8 +13,17 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, readonly) NSDictionary *filters;
-@property (nonatomic, strong) NSArray  *categories;
+@property (nonatomic, strong) NSArray *categories;
+@property (nonatomic, strong) NSArray *sortby;
+@property (nonatomic, strong) NSArray *radius;
+@property (nonatomic, strong) NSArray *deals;
+@property (nonatomic, strong) NSArray *section;
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
+@property (nonatomic, strong) NSMutableSet *selectedDeals;
+@property (nonatomic, strong) NSMutableSet *selectedSortby;
+@property (nonatomic, strong) NSMutableSet *selectedRadius;
+
+
 
 - (void) initCategories;
 
@@ -27,8 +36,14 @@
     
     if (self) {
         self.selectedCategories = [NSMutableSet set];
+        self.selectedDeals = [NSMutableSet set];
+        self.selectedSortby = [NSMutableSet set];
+        self.selectedRadius = [NSMutableSet set];
+        [self initSortby];
+        [self initRadius];
+        [self initDeal];
         [self initCategories];
-    
+        self.section = [[NSMutableArray alloc] initWithObjects:self.sortby,self.radius,self.deals,self.categories, nil];
     }
     return self;
 }
@@ -53,29 +68,95 @@
 }
 
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.section count];
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.categories.count;
+//    return self.categories.count;
+    return [[self.section objectAtIndex:section]count];
 
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
-    cell.titleLabel.text = self.categories[indexPath.row][@"name"];
-    cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
-    cell.delegate = self;
+
+//    static NSString *CellIdentifier = @"CellIdentifier";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    return cell;
+    SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
+    cell.delegate = self;
+    cell.titleLabel.text = [[self.section objectAtIndex:indexPath.section]objectAtIndex:indexPath.row][@"name"];
+    //cell.on = [[self.section objectAtIndex:indexPath.section] containsObject:[self.section objectAtIndex:indexPath.row]];
+    NSInteger numSection = indexPath.section;
+    
+    switch (numSection) {
+        case 0:
+            NSLog(@"Case Sort");
+            cell.on = [self.sortby containsObject:self.sortby[indexPath.row]];
+            return cell;
+            
+        case 1:
+            NSLog(@"Case Distance");
+            cell.on = [self.radius containsObject:self.radius[indexPath.row]];
+            return cell;
+            
+        case 2:
+            NSLog(@"Case Deal");
+            cell.on = [self.deals containsObject:self.deals[indexPath.row]];
+            return cell;
+            
+        case 3:
+            NSLog(@"Case Category");
+
+            cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
+            return cell;
+            
+        default:
+            return cell;
+    }
+    //cell.titleLabel.text = self.categories[indexPath.row][@"name"];
+    //cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
+    
+    //return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"Sort";
+            break;
+            
+        case 1:
+            return @"Distance";
+            break;
+            
+        case 2:
+            return @"Deal";
+            break;
+            
+        case 3:
+            return @"Category";
+            break;
+            
+        default:
+            return @"";
+            break;
+    }
+}
 
 
 -(void)switchCell:(SwitchCell *)cell didUpdateValue:(BOOL)value {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    if (value) {
-        [self.selectedCategories addObject:self.categories[indexPath.row]];
-    }
-    else {
-        [self.selectedCategories removeObject:self.categories[indexPath.row]];
+    //NSString *sectionIndex = [self.section objectAtIndex:[indexPath section]];
+    
+    if (indexPath.section == 0) {
+        value ? [self.selectedSortby addObject:self.sortby[indexPath.row]] : [self.selectedSortby removeObject:self.sortby[indexPath.row]];
+    }else if (indexPath.section == 1) {
+        value ? [self.selectedRadius addObject:self.radius[indexPath.row]] : [self.selectedRadius removeObject:self.radius[indexPath.row]];
+    }else if (indexPath.section == 2) {
+        value ? [self.selectedDeals addObject:self.deals[indexPath.row]] : [self.selectedDeals removeObject:self.deals[indexPath.row]];
+    }else if (indexPath.section == 3){
+        value ? [self.selectedCategories addObject:self.categories[indexPath.row]] : [self.selectedCategories removeObject:self.categories[indexPath.row]];
     }
 }
 
@@ -91,16 +172,42 @@
 
 - (NSDictionary *)filters {
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    
     if (self.selectedCategories.count > 0) {
         NSMutableArray *names = [NSMutableArray array];
+        
         for (NSDictionary *category in self.selectedCategories){
             [names addObject:category[@"code"]];
         }
         NSString *categoryFilter = [names componentsJoinedByString:@","];
         [filters setObject:categoryFilter forKey:@"category_filter"];
+    }
+
+    if (self.selectedRadius.count > 0) {
+        for (NSDictionary *radius in self.selectedRadius) {
+            NSLog(@"DistanceBy : %@", radius);
+            [filters setObject:radius[@"code"] forKey:@"radius_filter"];
+        }
+    }
+ 
+    if (self.selectedSortby.count > 0) {
+        for (NSDictionary *sortby in self.selectedSortby) {
+            NSLog(@"SortBy : %@", sortby);
+            [filters setObject:sortby[@"code"] forKey:@"sort"];
+        }
+    }
+    
+    if (self.selectedDeals.count > 0) {
+        NSLog(@"Deal :1 ");
+        [filters setObject:@"1" forKey:@"deals_filter"];
+    } else {
+        NSLog(@"Deal :0 ");
+        [filters setObject:@"0" forKey:@"deals_filter"];
+    }
+        
         //[filters setObject:@"2" forKey:@"sort"];
         NSLog(@"%@",filters); // add more filters here.
-    }
+    
     return filters;
 }
 
@@ -114,6 +221,33 @@
 - (void)onApplyButton {
     [self.delegate filterViewController:self didChangeFilters:self.filters];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)initSortby {
+    self.sortby = @[
+                    @{@"name" : @"Best Matched",@"code":@"0"},
+                    @{@"name" : @"Distance", @"code": @"1"},
+                    @{@"name" : @"Highest Rated", @"code": @"2"}
+                    ];
+
+}
+
+- (void)initRadius {
+    self.radius = @[
+                    @{@"name" : @"1 mile",@"code":@"1609"},
+                    @{@"name" : @"2 miles",@"code":@"3218"},
+                    @{@"name" : @"5 miles",@"code":@"8045"},
+                    @{@"name" : @"10 miles",@"code":@"16090"}
+                    ];
+
+}
+
+- (void)initDeal {
+    self.deals = @[
+                   @{@"name" : @"deals",@"code":@"1"}
+                   ];
+
 }
 
 - (void)initCategories {
