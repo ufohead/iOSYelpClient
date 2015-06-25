@@ -98,6 +98,8 @@
         }
         NSString *categoryFilter = [names componentsJoinedByString:@","];
         [filters setObject:categoryFilter forKey:@"category_filter"];
+        //[filters setObject:@"2" forKey:@"sort"];
+        NSLog(@"%@",filters); // add more filters here.
     }
     return filters;
 }
